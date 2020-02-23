@@ -13,6 +13,7 @@ yarn add @alexseitsinger/react-notifications
 #### NotificationsProvider
 
 Add a DOM element at the root of your app (at the bottom). Each notification rendered will be placed within this container.
+for each provided notification to be rendered within.
 
 ###### Props
 
@@ -42,7 +43,7 @@ const App = () => (
 )
 ```
 
-#### withNotifications (using <NotificationMessage />)
+#### withNotifications (using NotificationMessage)
 
 Component used to render a new notification.
 
@@ -68,7 +69,7 @@ const HomePage = withNotifications(({ NotificationMessage }) => (
 ))
 ```
 
-#### withNotifications (using addNotification())
+#### withNotifications (using addNotification)
 
 Function used to render a new notification.
 
