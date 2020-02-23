@@ -1,6 +1,6 @@
 {
   "name": "@alexseitsinger/react-notifications",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Display notifications in the DOM",
   "main": "index.js",
   "types": "types/index.d.ts",
