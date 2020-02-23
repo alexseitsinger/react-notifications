@@ -1,3 +1,10 @@
+<a name="v0.2.0"></a>
+## [v0.2.0](https://github.com/alexseitsinger/react-notifications/compare/v0.1.0...v0.2.0) (2020-02-23)
+
+### Code Refactoring
+- Changes children prop for addNotif. ([d0a42b5](https://github.com/alexseitsinger/react-notifications/commit/d0a42b5f8e9d66fffd57f8cd7bcf150827d59a91))
+
+
 <a name="v0.1.0"></a>
 ## [v0.1.0](https://github.com/alexseitsinger/react-notifications/compare/a19a1df06657a2bf225d4cf4a72c7d4f37ef6ed2...v0.1.0) (2020-02-23)
 
