@@ -4,7 +4,7 @@ export const hasRendered = (n: string): boolean => {
   return cache.includes(n)
 }
 
-export const addRendered = (n: string): boolean => {
+export const addRendered = (n: string): void => {
   if (hasRendered(n)) {
     return
   }

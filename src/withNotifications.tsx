@@ -1,22 +1,25 @@
-import React, { ElementType, ReactElement } from "react"
+import React, { ComponentType, ReactElement } from "react"
 
-import { Context, ContextProps } from "./context"
+import {
+  NotificationsContext,
+  NotificationsContextProps,
+} from "./NotificationsContext"
 
-export function withNotifications(Component: ElementType): ElementType {
-  return (props: any): ReactElement => {
-    return (
-      <Context.Consumer>
-        {({
-          NotificationMessage,
-          addNotification,
-        }: ContextProps): ReactElement => (
-          <Component
-            {...props}
-            NotificationMessage={NotificationMessage}
-            addNotification={addNotification}
-          />
-        )}
-      </Context.Consumer>
-    )
-  }
+export function withNotifications<P>(
+  Component: ComponentType<Partial<P>>
+): ComponentType<Partial<P>> {
+  return (props: any): ReactElement => (
+    <NotificationsContext.Consumer>
+      {({
+        NotificationMessage,
+        addNotification,
+      }: NotificationsContextProps): ReactElement => (
+        <Component
+          {...props}
+          NotificationMessage={NotificationMessage}
+          addNotification={addNotification}
+        />
+      )}
+    </NotificationsContext.Consumer>
+  )
 }
