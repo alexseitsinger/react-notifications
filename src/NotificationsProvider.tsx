@@ -16,8 +16,10 @@ export interface NotificationMessageProps {
   children: ReactNode;
 }
 
-export type AddNotificationArguments = NotificationMessageProps & {
-  isForced: boolean,
+export interface AddNotificationArguments {
+  notificationName: string;
+  isForced: boolean;
+  content: ReactNode | string;
 }
 
 type PreparedNotification = AddNotificationArguments & {
@@ -135,7 +137,7 @@ export class NotificationsProvider extends React.Component<Props, State> {
    */
   addNotification = ({
     notificationName,
-    children,
+    content,
     isForced,
   }: AddNotificationArguments): void => {
     /**
@@ -154,7 +156,7 @@ export class NotificationsProvider extends React.Component<Props, State> {
      */
     const prepared: PreparedNotification = {
       notificationName,
-      children,
+      content,
       isForced,
       createdOn: new Date(Date.now()),
     }
@@ -184,9 +186,9 @@ export class NotificationsProvider extends React.Component<Props, State> {
 
     return notifications
       .reverse()
-      .map(({ children }: PreparedNotification): ReactElement => {
+      .map(({ content }: PreparedNotification): ReactElement => {
         const key = `renderedNotification-${uniqueId()}`
-        const renderedNotification = renderNotification(children)
+        const renderedNotification = renderNotification(content)
         return <div key={key}>{renderedNotification}</div>
       })
   }
@@ -196,13 +198,13 @@ export class NotificationsProvider extends React.Component<Props, State> {
     const { style } = this.state
     const { children, containerClassName } = this.props
 
-    const NotificationMessage = (
-      props: NotificationMessageProps
-    ): ReactElement => {
+    const NotificationMessage = ({
+      children: notificationChildren,
+      ...restProps
+    }: NotificationMessageProps): ReactElement => {
       addNotification({
-        ...props,
-        // Since we're adding the notification directly from a render() call, we
-        // can't let isForced to be set. Otherwise, an infinite loop will occur.
+        ...restProps,
+        content: notificationChildren,
         isForced: false,
       })
       return <span>{null}</span>
