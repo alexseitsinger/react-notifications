@@ -1,3 +1,10 @@
+<a name="v0.3.0"></a>
+## [v0.3.0](https://github.com/alexseitsinger/react-notifications/compare/v0.2.0...v0.3.0) (2020-02-23)
+
+### Features
+- Adds types. ([0f05819](https://github.com/alexseitsinger/react-notifications/commit/0f05819a6610dfebb57733e93cfce729c6081519))
+
+
 <a name="v0.2.0"></a>
 ## [v0.2.0](https://github.com/alexseitsinger/react-notifications/compare/v0.1.0...v0.2.0) (2020-02-23)
 
