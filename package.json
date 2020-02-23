@@ -1,0 +1,94 @@
+{
+  "name": "@alexseitsinger/react-notifications",
+  "version": "0.0.0",
+  "description": "Display notifications in the DOM",
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist/*",
+    "types/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "./node_modules/.bin/webpack",
+    "test": "./node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexseitsinger/react-notifications.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Alex Seitsinger",
+    "email": "software@alexseitsinger.com"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/alexseitsinger/react-notifications/issues"
+  },
+  "homepage": "https://github.com/alexseitsinger/react-notifications",
+  "dependencies": {
+    "@babel/runtime-corejs3": "7.8.4",
+    "@emotion/core": "10.0.27",
+    "@emotion/styled": "10.0.27",
+    "core-js": "3.6.4"
+  },
+  "devDependencies": {
+    "@alexseitsinger/eslint-config": "^2.18.0",
+    "@babel/core": "7.8.4",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/plugin-proposal-export-default-from": "7.8.3",
+    "@babel/plugin-proposal-export-namespace-from": "7.8.3",
+    "@babel/plugin-syntax-export-default-from": "7.8.3",
+    "@babel/plugin-syntax-export-namespace-from": "7.8.3",
+    "@babel/plugin-transform-runtime": "7.8.3",
+    "@babel/preset-env": "7.8.4",
+    "@babel/preset-react": "7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/react": "^16.9.22",
+    "@types/react-dom": "^16.9.5",
+    "@types/underscore": "^1.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "8.0.6",
+    "babel-plugin-emotion": "^10.0.27",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.24",
+    "clean-webpack-plugin": "^3.0.0",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-import-resolver-jest": "^3.0.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-import-resolver-webpack": "^0.12.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.7.0",
+    "eslint-plugin-jest-formatting": "^1.2.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-package-json": "^0.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.1",
+    "jest": "25.1.0",
+    "jest-emotion": "^10.0.27",
+    "prettier": "^1.19.1",
+    "prettier-eslint": "^9.0.1",
+    "react": "16.12.0",
+    "react-dom": "^16.12.0",
+    "terser-webpack-plugin": "^2.3.5",
+    "ts-jest": "^25.2.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.2",
+    "wait-for-expect": "^3.0.2",
+    "webpack": "4.41.6",
+    "webpack-cli": "3.3.11",
+    "webpack-node-externals": "1.7.2"
+  },
+  "peerDependencies": {
+    "react": "16.8.6"
+  }
+}
