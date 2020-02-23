@@ -11,8 +11,9 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
-    "test": "./node_modules/.bin/jest"
+    "build:dev": "yarn webpack --config=webpack.config.dev.js",
+    "build": "yarn webpack && yarn run build:dev",
+    "test": "yarn jest"
   },
   "repository": {
     "type": "git",
