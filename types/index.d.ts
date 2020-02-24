@@ -1,2 +1,2 @@
-export { NotificationsProvider } from "./NotificationsProvider";
 export { withNotifications } from "./withNotifications";
+export { NotificationsProvider } from "./NotificationsProvider";

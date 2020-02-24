@@ -1,15 +1,15 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { PureComponent, ReactElement, ReactNode } from "react";
 import { CSSObject } from "@emotion/core";
 export interface NotificationMessageProps {
     notificationName: string;
-    children: ReactNode;
+    children: ReactNode | ReactNode[];
 }
-export interface AddNotificationArguments {
+export interface CreateNotificationMessageArguments {
     notificationName: string;
     isForced: boolean;
-    content: ReactNode | string;
+    content: ReactNode;
 }
-declare type PreparedNotification = AddNotificationArguments & {
+declare type PreparedNotification = CreateNotificationMessageArguments & {
     createdOn: Date;
 };
 declare const defaultProps: {
@@ -26,7 +26,7 @@ interface State {
     notifications: PreparedNotification[];
     style: CSSObject;
 }
-export declare class NotificationsProvider extends React.Component<Props, State> {
+export declare class NotificationsProvider extends PureComponent<Props, State> {
     static defaultProps: DefaultProps;
     state: State;
     removeOldestNotification: () => void;
@@ -36,10 +36,10 @@ export declare class NotificationsProvider extends React.Component<Props, State>
     componentWillUnmount(): void;
     getStyle: () => CSSObject;
     handleScroll: () => void;
-    addNotification: ({ notificationName, content, isForced, }: AddNotificationArguments) => void;
-    clearNotificationsCache: () => void;
-    removeAllNotifications: () => void;
-    renderNotifications: () => React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>[];
+    createNotificationMessage: ({ notificationName, content, isForced, }: CreateNotificationMessageArguments) => void;
+    clearCachedNotifications: () => void;
+    clearNotifications: () => void;
+    renderNotifications: () => React.ReactNode[];
     render(): ReactElement;
 }
 export {};
