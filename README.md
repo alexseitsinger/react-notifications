@@ -44,6 +44,19 @@ const App = () => (
 )
 ```
 
+#### withNotifications
+
+HOC that provides **notifications props** to a component.
+
+###### Notification Props Provided:
+
+Name                      | Description
+---                       | ---
+NotificationMessage       | Component used to render notification messages.
+createNotificationMessage | Function to create notification messages. (Useful for button callback, etc.)
+clearCachedNotifications  | Clears the cached notification names. (Setting `isForced` to `true` ignores this cache)
+clearNotifications        | Removes all the currently renderd notifications.
+
 #### NotificationMessage (via withNotifications)
 
 Component used to create new notification messages. NOTE: `isForced` is automatically set to `false` for this to prevent render loops.
