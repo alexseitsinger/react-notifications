@@ -1,3 +1,11 @@
+<a name="v1.0.0"></a>
+## [v1.0.0](https://github.com/alexseitsinger/react-notifications/compare/v0.3.0...v1.0.0) (2020-02-24)
+
+### Code Refactoring
+- Renames types. ([5a255a9](https://github.com/alexseitsinger/react-notifications/commit/5a255a96f69b177f9210fe91a352a017abe61c7f))
+- Updates types. ([346932d](https://github.com/alexseitsinger/react-notifications/commit/346932d2b6114073c36967ea413fe2c6fd35a6c0))
+
+
 <a name="v0.3.0"></a>
 ## [v0.3.0](https://github.com/alexseitsinger/react-notifications/compare/v0.2.0...v0.3.0) (2020-02-23)
 
