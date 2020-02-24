@@ -20,7 +20,7 @@ for each provided notification to be rendered within.
 Name               | Description                                                        | Default   | Required?
 ---                | ---                                                                | ---       | ---
 displayInterval    | The time(ms) to show each notification before removing the oldest. | undefined | yes
-renderNotification | Invoked to render the output for each notification.                | undefined | yes
+renderNotification | Invoked to render each notification.                               | undefined | yes
 
 ###### Example
 
@@ -29,13 +29,14 @@ renderNotification | Invoked to render the output for each notification.        
 import { NotificationsProvider } from "@alexseitsinger/react-notifications"
 
 // Re-use a render method for each notification.
-const renderNotification = (message) => (
-  <div>{message}</div>
+// Use this to render each notification with the same template.
+const renderNotification = (element) => (
+  <div>{element}</div>
 )
 
 // Add the provider to the app root. It will add a mount point into the DOM for the notifications to render within.
 const App = () => (
-  <NotificationsProvider renderNotification={renderNotification}>
+  <NotificationsProvider renderNotification={renderNotification} displayInterval={3000}>
     <Router>
       <Route path={"/"} exact component={HomePage} />
     </Router>
@@ -43,16 +44,17 @@ const App = () => (
 )
 ```
 
-#### withNotifications (using NotificationMessage)
+#### NotificationMessage (via withNotifications)
 
-Component used to render a new notification.
+Component used to create new notification messages. NOTE: `isForced` is automatically set to `false` for this to prevent render loops.
 
 ###### Props
 
-Name             | Description                                | Deafault  | Required?
----              | ---                                        | ---       | ---
-notificationName | The unique name of the notification.       | undefined | yes
-children         | The content to render as the notification. | undefined | yes
+Name             | Description                               | Deafault  | Required?
+---              | ---                                       | ---       | ---
+notificationName | The unique name of the notification.      | undefined | yes
+isRepeated       | Show multiple copies of the same message  | false     | no
+children         | The content to render as the notification | undefined | yes
 
 ###### Example
 
@@ -62,24 +64,25 @@ import { withNotifications } from "@alexseitsinger/react-notifications"
 const HomePage = withNotifications(({ NotificationMessage }) => (
   <div id="homePage">
     <div> Some normal content</div>
-    <NotificationMessage notificationName={"home-page-render-notification"}>
+    <NotificationMessage notificationName={"home-page-render-notification"} isRepeated={false}>
       This notification gets displayed once.
     </NotificationMessage>
   </div>
 ))
 ```
 
-#### withNotifications (using addNotification)
+#### createNotificationMessage (via withNotifications)
 
-Function used to render a new notification.
+Function used to create a new notification message.
 
 ###### Props
 
 Name             | Description                                                    | Default   | Required?
 ---              | ---                                                            | ---       | ---
 notificationName | The unique name of the notification.                           | undefined | yes
-text             | The text to render as the notification.                        | undefined | yes
-isForced         | Should the notification be shown if it already was previously? | undefined | no
+isForced         | Should the notification be shown if it already was previously? | false     | no
+isRepeated       | Show multiple copies of the same message                       | false     | no
+onRender         | Invoked to render the notification message                     | undefined | yes
 
 ###### Example
 
@@ -88,15 +91,16 @@ isForced         | Should the notification be shown if it already was previously
 import { withNotifications } from "@alexseitsinger/react-notifications"
 
 const HomePage = () => withNotifications(
-  ({ addNotification, ...restProps }) => {
+  ({ createNotificationMessage, ...restProps }) => {
     return (
       <PageContainer>
         <div>Some normal page content</div>
         <button onClick={() => {
-          addNotification({
+          createNotificationMessage({
             notificationName: "on-click-success-notification-1",
-            text: "You did it!",
+            onRender: () => <div>You did it!</div>,
             isForced: true,
+            isRepeated: false,
           })
         }}>
           Click to do action
