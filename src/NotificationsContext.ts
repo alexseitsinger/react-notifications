@@ -1,13 +1,15 @@
-import React, { ReactElement } from "react"
+import React from "react"
 
 import {
-  AddNotificationArguments,
+  CreateNotificationMessageArguments,
   NotificationMessageProps,
 } from "./NotificationsProvider"
 
 export interface NotificationsContextProps {
-  NotificationMessage: (args: NotificationMessageProps) => ReactElement;
-  addNotification: (args: AddNotificationArguments) => void;
+  NotificationMessage: (args: NotificationMessageProps) => null;
+  createNotificationMessage: (args: CreateNotificationMessageArguments) => void;
+  clearCachedNotifications: () => void;
+  clearNotifications: () => void;
 }
 
 const defaultContext = {}

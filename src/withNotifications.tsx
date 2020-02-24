@@ -1,25 +1,36 @@
 import React, { ComponentType, ReactElement } from "react"
 
 import {
-  NotificationsContext,
-  NotificationsContextProps,
+  NotificationsContext as Context,
+  NotificationsContextProps as ContextProps,
 } from "./NotificationsContext"
 
-export function withNotifications<P>(
-  Component: ComponentType<Partial<P>>
-): ComponentType<Partial<P>> {
-  return (props: any): ReactElement => (
-    <NotificationsContext.Consumer>
+type Partialize<T, K extends keyof T> =
+  Pick<T, Exclude<keyof T, K>> &
+  Partial<Pick<T, K>>
+
+type WithoutContextProps<P extends ContextProps> =
+  Partialize<P, keyof ContextProps>
+
+export function withNotifications<P extends ContextProps>(
+  Component: ComponentType<WithoutContextProps<P>>
+): ComponentType<WithoutContextProps<P>> {
+  return (props: WithoutContextProps<P>): ReactElement => (
+    <Context.Consumer>
       {({
         NotificationMessage,
-        addNotification,
-      }: NotificationsContextProps): ReactElement => (
+        createNotificationMessage,
+        clearCachedNotifications,
+        clearNotifications,
+      }: ContextProps): ReactElement => (
         <Component
           {...props}
           NotificationMessage={NotificationMessage}
-          addNotification={addNotification}
+          createNotificationMessage={createNotificationMessage}
+          clearCachedNotifications={clearCachedNotifications}
+          clearNotifications={clearNotifications}
         />
       )}
-    </NotificationsContext.Consumer>
+    </Context.Consumer>
   )
 }

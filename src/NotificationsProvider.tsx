@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { ReactElement, ReactNode } from "react"
+import React, { PureComponent, ReactElement, ReactNode } from "react"
 import { CSSObject, jsx } from "@emotion/core"
 import { throttle, uniqueId } from "underscore"
 
@@ -11,18 +11,22 @@ import {
 import { addRendered, clearRendered, hasRendered } from "./rendered"
 import { getYPosition, hasDOM } from "./utils"
 
-export interface NotificationMessageProps {
+interface NotificationProps {
   notificationName: string;
-  children: ReactNode;
+  isForced?: boolean;
+  isRepeated?: boolean;
+  displayInterval?: number;
 }
 
-export interface AddNotificationArguments {
-  notificationName: string;
-  isForced: boolean;
-  content: ReactNode | string;
+export type NotificationMessageProps = NotificationProps & {
+  children: ReactNode | ReactNode[],
 }
 
-type PreparedNotification = AddNotificationArguments & {
+export type CreateNotificationMessageArguments = NotificationProps & {
+  onRender: () => ReactNode,
+}
+
+type PreparedNotification = CreateNotificationMessageArguments & {
   createdOn: Date,
 }
 
@@ -44,7 +48,7 @@ interface State {
   style: CSSObject;
 }
 
-export class NotificationsProvider extends React.Component<Props, State> {
+export class NotificationsProvider extends PureComponent<Props, State> {
   static defaultProps: DefaultProps = defaultProps
 
   state: State = {
@@ -54,9 +58,6 @@ export class NotificationsProvider extends React.Component<Props, State> {
 
   /**
    * After a delay, remove the first (oldest) notification from the DOM.
-   *
-   * TODO: Add datestamps to each notification as they're added sow e can easily
-   * sort and manage them in order easily.
    */
   removeOldestNotification: () => void
 
@@ -135,11 +136,12 @@ export class NotificationsProvider extends React.Component<Props, State> {
   /**
    * Adds a new unique notification to be rendered next.
    */
-  addNotification = ({
+  createNotificationMessage = ({
     notificationName,
-    content,
-    isForced,
-  }: AddNotificationArguments): void => {
+    isForced = false,
+    isRepeated = false,
+    onRender,
+  }: CreateNotificationMessageArguments): void => {
     /**
      * If its's already been renders, and it's not being forced, then dont add
      * it again.
@@ -156,63 +158,86 @@ export class NotificationsProvider extends React.Component<Props, State> {
      */
     const prepared: PreparedNotification = {
       notificationName,
-      content,
+      onRender,
       isForced,
+      isRepeated,
       createdOn: new Date(Date.now()),
     }
-    this.setState((prevState: State): State => ({
+    const { notifications } = this.state
+    const isRepeating = notifications
+      .map((o: PreparedNotification): boolean => {
+        return o.notificationName === prepared.notificationName
+      })
+      .includes(true)
+
+    // Prevent duplicate messages from being displayed at the same time.
+    if (isRepeating && !isRepeated) {
+      return
+    }
+
+    this.setState({
       style: this.getStyle(),
-      notifications: [...prevState.notifications, prepared],
-    }))
+      notifications: [...notifications, prepared],
+    })
   }
 
   /**
    * Clears the cached names so the same notifictions can be rendered again.
    */
-  clearNotificationsCache = (): void => {
+  clearCachedNotifications = (): void => {
     clearRendered()
   }
 
   /**
    * Immediately remove all currently rendered notifications.
    */
-  removeAllNotifications = (): void => {
+  clearNotifications = (): void => {
     this.setState({ notifications: [] })
   }
 
-  renderNotifications = (): ReactElement[] => {
+  renderNotifications = (): ReactNode[] => {
     const { renderNotification } = this.props
     const { notifications } = this.state
 
     return notifications
       .reverse()
-      .map(({ content }: PreparedNotification): ReactElement => {
-        const key = `renderedNotification-${uniqueId()}`
-        const renderedNotification = renderNotification(content)
-        return <div key={key}>{renderedNotification}</div>
+      .map(({ onRender }: PreparedNotification): ReactNode => {
+        const key = `Notification-${uniqueId()}`
+        const rendered = renderNotification(onRender())
+        return (
+          <div key={key} className={"Notification"}>
+            {rendered}
+          </div>
+        )
       })
   }
 
   render(): ReactElement {
-    const { addNotification } = this
+    const {
+      createNotificationMessage,
+      clearNotifications,
+      clearCachedNotifications,
+    } = this
     const { style } = this.state
     const { children, containerClassName } = this.props
 
     const NotificationMessage = ({
-      children: notificationChildren,
+      children: theseChildren,
       ...restProps
-    }: NotificationMessageProps): ReactElement => {
-      addNotification({
+    }: NotificationMessageProps): null => {
+      createNotificationMessage({
         ...restProps,
-        content: notificationChildren,
+        onRender: (): ReactNode => theseChildren,
         isForced: false,
       })
-      return <span>{null}</span>
+      return null
     }
 
     const value: NotificationsContextProps = {
       NotificationMessage,
-      addNotification,
+      createNotificationMessage,
+      clearCachedNotifications,
+      clearNotifications,
     }
 
     return (
