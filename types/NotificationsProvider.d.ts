@@ -1,14 +1,17 @@
 import React, { PureComponent, ReactElement, ReactNode } from "react";
 import { CSSObject } from "@emotion/core";
-export interface NotificationMessageProps {
+interface NotificationProps {
     notificationName: string;
+    isForced?: boolean;
+    isRepeated?: boolean;
+    displayInterval?: number;
+}
+export declare type NotificationMessageProps = NotificationProps & {
     children: ReactNode | ReactNode[];
-}
-export interface CreateNotificationMessageArguments {
-    notificationName: string;
-    isForced: boolean;
-    content: ReactNode;
-}
+};
+export declare type CreateNotificationMessageArguments = NotificationProps & {
+    onRender: () => ReactNode;
+};
 declare type PreparedNotification = CreateNotificationMessageArguments & {
     createdOn: Date;
 };
@@ -36,7 +39,7 @@ export declare class NotificationsProvider extends PureComponent<Props, State> {
     componentWillUnmount(): void;
     getStyle: () => CSSObject;
     handleScroll: () => void;
-    createNotificationMessage: ({ notificationName, content, isForced, }: CreateNotificationMessageArguments) => void;
+    createNotificationMessage: ({ notificationName, isForced, isRepeated, onRender, }: CreateNotificationMessageArguments) => void;
     clearCachedNotifications: () => void;
     clearNotifications: () => void;
     renderNotifications: () => React.ReactNode[];
