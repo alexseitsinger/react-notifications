@@ -11,8 +11,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build:dev": "yarn webpack --config=webpack.config.dev.js",
     "build": "yarn webpack && yarn run build:dev",
+    "build:dev": "yarn webpack --config=webpack.config.dev.js",
     "test": "yarn jest"
   },
   "repository": {
