@@ -1,3 +1,13 @@
+<a name="v1.1.0"></a>
+## [v1.1.0](https://github.com/alexseitsinger/react-notifications/compare/v1.0.0...v1.1.0) (2020-02-26)
+
+### Bug Fixes
+- Changes zIndex. ([6ab31cc](https://github.com/alexseitsinger/react-notifications/commit/6ab31cc4644bd9752a49ca6f2425414eecdb63ea))
+
+### Code Refactoring
+- Updates types. ([95c6259](https://github.com/alexseitsinger/react-notifications/commit/95c62594118e6b616f3277db751582362fd3bb3b))
+
+
 <a name="v1.0.0"></a>
 ## [v1.0.0](https://github.com/alexseitsinger/react-notifications/compare/v0.3.0...v1.0.0) (2020-02-24)
 
